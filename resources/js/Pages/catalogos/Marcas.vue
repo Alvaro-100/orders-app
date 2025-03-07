@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <Head title="Marcas" />
+    <Head title="Marcas.vue" />
     <AuthenticatedLayout>
         <h1 class="text-2x1 font-semibold"></h1>
     </AuthenticatedLayout>

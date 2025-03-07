@@ -51,7 +51,7 @@ const agregarOrden = (producto, cantidad) => {
     return;
   }
   //hacemos el proceso para realizar el producto
-  const nevoProducto = {...producto};
+  const nuevoProducto = {...producto};
   const existe = orden.value.detalleOrdenes.find(item => item.producto.id === productos);
   if(existe){
     existe.cantidad += cantidad;
@@ -63,7 +63,7 @@ const agregarOrden = (producto, cantidad) => {
     orden.value.detalleOrdenes.push({
     cantidad: cantidad,
     precio: producto.precio,
-    producto: nevoProducto,
+    producto: nuevoProducto,
     subtotal: producto.precio * cantidad
     });
     Swal.fire({title: "Producto Agregado",
@@ -256,8 +256,9 @@ const deleteItem = (item) =>{
       </button>
     </div>
     <!--Div para mostral el detalle de orden -->
-    </div v-if="orden.detalleOrdenes?.lengt > 0" class="mt-6 py-6 bg-white rounded-lg shadow-lg">
+    </div v-if="orden.detalleOrdenes?.length > 0" class="mt-6 p-6 bg-white rounded-lg">
     <h2 class="text-2x1 font-semibold mb-4 text-gray-700"> Resumen de la orden</h2>
+    <div class="overflow-x-auto">
     <table class="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
       <thead>
         <tr>
@@ -266,6 +267,8 @@ const deleteItem = (item) =>{
           <th class="px-4 py-2 text-left">Precio</th> 
           <th class="px-4 py-2 text-left">Cantidad</th>
           <th class="px-4 py-2 text-left">subtotal</th>
+          <th class="px-4 py-2 text-left">Acción</th>
+
         </tr>
       </thead>
       <tbody >
@@ -277,7 +280,7 @@ const deleteItem = (item) =>{
           <td class="px-4 py-2">${{ ((item.producto.precio ?? 0) * (item.cantidad ?? 0)) }}</td>
           <td>
             <button @click="deleteItem(item)" class="px-3 py-1 bg-red-500 text-white rounded :hover">
-
+              X
             </button>
           </td>
         </tr>
@@ -290,9 +293,11 @@ const deleteItem = (item) =>{
         </tr>
       </tfoot>
     </table>
-    </div>
-  <div class ="mt-4 text-right">
+    <div class ="mt-4 text-right">
     <button @click="confirmarOrden" class="px-3 py-3 bg-green-700 text-white rounde font-semibold">
+      confirmar
     </button>
+    </div>
+  </div>
   </div>
 </template>
