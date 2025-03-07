@@ -60,7 +60,7 @@ const user = page.props.auth.user;
                 '-translate-x-full md:translate-x-0': !isSidebarOpen,
                 'translate-x-0' : isSidebarOpen,
             }"
-            class="fixed md:relative top-0 left-0 h-[calc(100vh-64px)] w-64 bg-blue-700
+            class="fixed md:relative top-16 left-0 h-[calc(100vh-64px)] w-64 bg-blue-700
             text-white transform  transition-transform duration-300 aese-in-out shadow-lg z-40"
             >
             <div class="px-4 text-xl font-semibold flex justify-between items-center ">
@@ -72,13 +72,13 @@ const user = page.props.auth.user;
             <nav class="mt-4">
                 <ul>
                     <li class="px-6 py-3 hover:bg-blue-500 flex items-center">
-                        <a href="#" class="flex items-center w-full">
+                        <a :href="route('dashboard')" class="flex items-center w-full">
                             <FontAwesomeIcon :icon="faHome" class="mr-3" />
                             Inicio
                         </a>
                     </li>
                     <li class="px-6 py-3 hover:bg-blue-500 flex items-center">
-                        <a href="#" class="flex items-center w-full">
+                        <a :href="route('marcas')" class="flex items-center w-full">
                             <FontAwesomeIcon :icon="faLayerGroup" class="mr-3" />
                             Catalogos
                         </a>

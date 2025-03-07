@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('marcas/view', function(){
+Route::get('/marcas', function(){
     return Inertia::render('catalogos/Marcas');
-})->middleware(['auth', 'verified'])->name('marcas.view');
+})->middleware(['auth', 'verified'])->name('marcas');
 require __DIR__.'/auth.php';
