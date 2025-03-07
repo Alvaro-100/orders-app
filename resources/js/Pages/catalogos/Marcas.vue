@@ -6,15 +6,14 @@ import Aura from '@primeuix/themes/aura';
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Marcas" />
 
     <AuthenticatedLayout>
         
         <template #header>
             <h2
                 class="text-xl font-semibold leading-tight text-gray-800"
-            >
-                
+            > 
             </h2>
         </template>
 
