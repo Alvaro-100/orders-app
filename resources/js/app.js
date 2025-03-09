@@ -6,8 +6,11 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import Swal from 'sweetalert2';
-
 import PrimeVue from 'primevue/config';
+import Aura from '@primeuix/themes/aura';
+import { ToastService } from 'primevue';
+import 'primeicons/primeicons.css';
+import theme from 'tailwindcss/defaultTheme';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -22,10 +25,16 @@ createInertiaApp({
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(ZiggyVue)
-            app.use(PrimeVue);
+            app.use(PrimeVue,{
+                theme:{
+                    preset: Aura
+                }
+            });
             
             //configuracion global de Sweetalert2
             app.config.globalProperties.$swal = Swal;
+            app.use(PrimeVue);
+            app.use(ToastService);
             app.mount(el);
             return app;
             

@@ -80,7 +80,7 @@ class MarcaController extends Controller
                $marca = Marca::findOrFail($id);
                $marca->nombre = $request->nombre;
                if($marca->update() > 0)
-                   return response()->json(["marca"=>$marca,"message"=>"marca actualizada...!"],202);
+                 return response()->json(["marca"=>$marca,"message"=>"marca actualizada...!"],202);
                else
                return response()->json(["message"=>"Ocurrio un error al actualizar el registro, intente de nuevo"],500);
             } 

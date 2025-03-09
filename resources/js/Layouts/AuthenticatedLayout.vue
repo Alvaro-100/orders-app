@@ -7,24 +7,24 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { usePage, Link} from "@inertiajs/vue3";
 /* import { LogOutput } from 'concurrently'; */ 
-
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars, faHome, faBox, faClipboardList, faFileAlt, faLayerGroup, faTimes, faUserCircle, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import axios from 'axios';
 
- 
+import { Toast } from 'primevue';
+
 const page = usePage();
 const user = page.props.auth.user;
  const isSidebarOpen = ref([false]);
  const anioActual = ref(new Date().getFullYear());
 
  //funciones para la logica 
- const logout = async () =>{
+ const logout = async () => {
     try{
         await axios.post('/logout');
         Window.location.href = '/login';
     }catch(err){
-        console.error("Error al cerrar la sección, err");
+        console.error("Error al cerrar la sección", err);
 
     }
  };
@@ -32,6 +32,7 @@ const user = page.props.auth.user;
 </script>
 
 <template>
+    <Toast />
     <div class="h-screen flex flex-col">
         <!--navbar-->
         <header class="bg-blue-700 text-white shadow-md fixed top-0 w-full z">
