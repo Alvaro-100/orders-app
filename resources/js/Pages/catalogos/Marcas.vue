@@ -53,23 +53,59 @@
                 console.error('Error al obtener las Marcas', err);
             }
         }
-        const saveOrUpdate = () => {
+        const saveOrUpdate = async() => {
             submitted.value = true;
 
             if (marca?.value.nombre?.trim()) {
                 if (marca.value.id) {
                     //se va actualizar el registro
+                    try{
+                        const response = await axios.put(`${url}/${marca.value.id}`,marca.value);
+                        if(response.status===202){
+                            const {marca: nuevaMarca,message} = response.data;
+                            //buscamos el indice del elemento en el array
+                            const index = marcas.value.findIndex(m => m.id === nuevaMarca.id);
+                            if(index !== -1){
+                                marcas.value[index] = nuevaMarca;
+                            }
+                            toast.add({severity:'success', summary: 'Successful',
+                             detail: message, life: 3000});
+                            dialog.value = false;
+                            marca.value = {};
+
+                        }
+                    }catch(err){
+                        if(err.response.status===409){
+                        toast.add({severity:'warn', summary: 'Advertencia',
+                         detail: `${err.response.data.message}, Ya existe esta maraca`, life: 3000});
+
+                    }
+                    console.log(err);
+                    }
                     
-                    toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
                 }
                 else {
                     //proceso para nuevo registro
-                    
-                    toast.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
+                    try{
+                        const response = await axios.post(url,marca.value);
+                        if(response.status===201){
+                            const {marca,message} = response.data;
+                            marcas.value.unshift(marca);
+                            toast.add({severity:'success', summary: 'Successful', detail: message, life: 3000});
+                            dialog.value = false;
+                            marca.value = {};
+
+                        }
+                   }catch(err){
+                    if(err.response.status===409){
+                        toast.add({severity:'warn', summary: 'Advertencia',
+                         detail: `${err.response.data.message}, Ya existe esta maraca`, life: 3000});
+
+                    }
+               }
                 }
 
-                dialog.value = false;
-                marca.value = {};
+               
             }
         };
         const editMarca = (item ) => {
@@ -81,7 +117,27 @@
             marca.value = m;
             deleteMarcaDialog.value = true;
         };
-        const deleteMarca = () => {
+        const deleteMarca = async() => {
+
+            try {
+                const response = await axios.delete(`${url}/${marca.value.id}`);
+                if(response.status===200){
+                    const {message} = response.data;
+            marcas.value = marcas.value.filter(val => val.id !== marca.value.id);
+            deleteMarcaDialog.value = false;
+            marca.value = {};
+            toast.add({severity:'success', summary: 'Successful', detail: message, life: 3000});
+
+                }
+            } catch (error) {
+                if(err.response.data.status === 500)
+                toast.add({severity:'error', summary: 'Error',
+                detail: err.response.data.message, life: 3000});
+            
+            }
+            console.log("Error al elinimar la marca")
+
+
             marcas.value = marcas.value.filter(val => val.id !== marca.value.id);
             deleteMarcaDialog.value = false;
             marca.value = {};
