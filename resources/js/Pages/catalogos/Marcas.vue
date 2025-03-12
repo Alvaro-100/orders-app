@@ -6,15 +6,9 @@
     import { FilterMatchMode } from '@primevue/core/api';
     import { Toast } from 'primevue';
     import { useToast } from 'primevue/usetoast';
-    import Button from "primevue/button"        
-    import Toolbar from 'primevue/toolbar';
-    import DataTable from 'primevue/datatable';
-    import Column from 'primevue/column';
-    import Dialog from 'primevue/dialog';
-    import InputText from 'primevue/inputtext';
-    import IconField from 'primevue/iconfield';
-    import InputIcon from 'primevue/inputicon';
+    
     import axios from 'axios';
+    
     
 
     onMounted(() => {
@@ -130,18 +124,16 @@
 
                 }
             } catch (error) {
-                if(err.response.data.status === 500)
+                if(err.status === 500 || err.status ===409){
                 toast.add({severity:'error', summary: 'Error',
-                detail: err.response.data.message, life: 3000});
-            
+                detail: err.response.data.err, life: 3000});
+                }else{
+                    console.log("Error al elinimar la marca")
+                }
             }
-            console.log("Error al elinimar la marca")
-
-
-            marcas.value = marcas.value.filter(val => val.id !== marca.value.id);
+            
             deleteMarcaDialog.value = false;
             marca.value = {};
-            toast.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
         };
        
         const exportCSV = () => {

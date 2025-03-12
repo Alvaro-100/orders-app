@@ -85,10 +85,10 @@ const user = page.props.auth.user;
                         </a>
                     </li>
                     <li class="px-6 py-3 hover:bg-blue-500 flex items-center">
-                        <a href="#" class="flex items-center w-full">
+                        <Link :href="route('productos')" class="flex items-center w-full">
                             <FontAwesomeIcon :icon="faBox" class="mr-3" />
                             Productos
-                        </a>
+                        </Link>
                     </li>
                     <li class="px-6 py-3 hover:bg-blue-500 flex items-center">
                         <a href="#" class="flex items-center w-full">

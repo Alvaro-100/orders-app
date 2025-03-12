@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Database\QueryException;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -99,9 +99,14 @@ class MarcaController extends Controller
             if($marca->delete() > 0){
                 return response()->json(["message"=>"marca eliminado...."],200);
             }else{
-               return response()->json(["message"=>"Imposible eliminar el registro..!"],500);
-            } 
-        }catch(\Exception $e){
+               return response()->json(["message"=>"Ocurrio un error al intentar eliminar la marca..!"],500);
+            }
+        }catch(QueryException $e){
+            if($e->getCode() == "2300"){
+                return response()->json(['Error'=>'No se puede eliminar esta marca, porque tiene porductos relaccionados'],409);
+            }
+            return response()->json(['Error'=>'Error en la base de datos' .$e->getMessage()],500);
+            }catch(\Exception $e){
             return response()->json(['error'=>$e->getMessage()],500);
         }
     }

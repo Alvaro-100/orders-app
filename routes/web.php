@@ -32,4 +32,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/marcas', function(){
     return Inertia::render('catalogos/Marcas');
 })->middleware(['auth', 'verified'])->name('marcas');
+
+Route::get('/productos', function(){
+    return Inertia::render('catalogos/Productos');
+})->middleware(['auth', 'verified'])->name('productos');
+
 require __DIR__.'/auth.php';
